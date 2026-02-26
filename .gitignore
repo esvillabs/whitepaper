@@ -1,0 +1,13 @@
+# Build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+
+# Keep PDFs in repo for distribution
+# *.pdf
