@@ -44,7 +44,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\textit{Esvil Protocol --- Whitepaper v2.0}}
+\fancyhead[L]{\small\textit{Esvil Protocol \textbar{} Whitepaper v2.0}}
 \fancyhead[R]{\small\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 
@@ -115,7 +115,7 @@
 \newpage
 \begin{abstract}
 \noindent
-The tokenization of real-world assets (RWAs) promises to unlock trillions of dollars in illiquid value, yet current protocols remain asset-specific, architecturally rigid, and poorly suited to evolving regulatory requirements. The \textbf{Esvil Protocol} introduces a decentralized, compliance-aware infrastructure for tokenizing \textit{any} real-world asset---including real estate, precious metals, commodities, intellectual property, and revenue-bearing instruments---on the BNB Chain. The protocol employs an \textbf{ERC-2535 Diamond Pattern} architecture, enabling modular, upgradeable smart contract systems where discrete functional facets (tokenization, compliance, trading, governance, revenue distribution) share a single proxy address and unified storage layer. A novel \textbf{E-RWA hybrid token standard} synthesizes ERC-3643 (T-REX compliant transfers), ERC-1643 (on-chain legal documents), ERC-1644 (controller-forced transfers), and ERC-1410 (partitioned balances into Class~A, B, and C tranches) to accommodate diverse asset classes under a single composable framework. Community governance through vote-escrowed \textbf{veESVL} tokens controls protocol parameters, asset approvals, verifier elections, and facet upgrades. A decentralized network of staked Asset Verifiers provides due diligence attestations, with slashing penalties ensuring accountability. We present the protocol's formal architecture, tokenization flow, cryptoeconomic model, governance mechanics, and regulatory compliance strategy across multiple jurisdictions.
+The tokenization of real-world assets (RWAs) promises to unlock trillions of dollars in illiquid value, yet current protocols remain asset-specific, architecturally rigid, and poorly suited to evolving regulatory requirements. The \textbf{Esvil Protocol} introduces a decentralized, compliance-aware infrastructure for tokenizing \textit{any} real-world asset (including real estate, precious metals, commodities, intellectual property, and revenue-bearing instruments) on the BNB Chain. The protocol employs an \textbf{ERC-2535 Diamond Pattern} architecture, enabling modular, upgradeable smart contract systems where discrete functional facets (tokenization, compliance, trading, governance, revenue distribution) share a single proxy address and unified storage layer. A novel \textbf{E-RWA hybrid token standard} synthesizes ERC-3643 (T-REX compliant transfers), ERC-1643 (on-chain legal documents), ERC-1644 (controller-forced transfers), and ERC-1410 (partitioned balances into Class~A, B, and C tranches) to accommodate diverse asset classes under a single composable framework. Community governance through vote-escrowed \textbf{veESVL} tokens controls protocol parameters, asset approvals, verifier elections, and facet upgrades. A decentralized network of staked Asset Verifiers provides due diligence attestations, with slashing penalties ensuring accountability. We present the protocol's formal architecture, tokenization flow, cryptoeconomic model, governance mechanics, and regulatory compliance strategy across multiple jurisdictions.
 \end{abstract}
 
 \vspace{0.5cm}
@@ -134,7 +134,7 @@ The tokenization of real-world assets (RWAs) promises to unlock trillions of dol
 
 \subsection{Background}
 
-Real-world assets---spanning real estate, precious metals, commodities, fine art, intellectual property, and private credit---represent an estimated \$900 trillion in global value~\cite{mckinsey2024}. The vast majority of this value remains illiquid, fractionally inaccessible, and confined within opaque, jurisdiction-bound markets. Blockchain-based tokenization offers a paradigm shift: representing ownership rights as programmable tokens that can be fractionalized, traded, and composed within decentralized financial systems~\cite{zetzsche2020, schar2021}.
+Real-world assets, spanning real estate, precious metals, commodities, fine art, intellectual property, and private credit, represent an estimated \$900 trillion in global value~\cite{mckinsey2024}. The vast majority of this value remains illiquid, fractionally inaccessible, and confined within opaque, jurisdiction-bound markets. Blockchain-based tokenization offers a paradigm shift: representing ownership rights as programmable tokens that can be fractionalized, traded, and composed within decentralized financial systems~\cite{zetzsche2020, schar2021}.
 
 Despite significant advances, the current RWA tokenization landscape suffers from three structural deficiencies:
 
@@ -185,11 +185,32 @@ Szabo~\cite{szabo1997} anticipated many of these developments with his formaliza
 
 \subsection{Asset Tokenization Frameworks}
 
-The tokenization of real-world assets has attracted substantial academic and industry attention. Konashevych~\cite{konashevych2020} introduced the concept of ``Title Tokens'' for real estate, arguing for technological neutrality where blockchain-based registries coexist with traditional land registries. His framework addressed the legal, technological, and organizational dimensions of real estate tokenization, establishing that tokenization is not merely a technical exercise but requires coordinated reform across property law, registry governance, and citizen rights. Esvil's DocumentFacet (ERC-1643) and multi-jurisdictional compliance strategy directly extend this vision to a broader asset universe.
+The tokenization of real-world assets has attracted substantial academic and industry attention. Konashevych~\cite{konashevych2020} introduced the concept of ``Title Tokens'' for real estate, arguing for technological neutrality where blockchain-based registries coexist with traditional land registries. His framework illustrated how ownership tokens can be cryptographically linked to off-chain certificates (Figure~\ref{fig:konash-title}), addressing the legal, technological, and organizational dimensions of real estate tokenization. He established that tokenization is not merely a technical exercise but requires coordinated reform across property law, registry governance, and citizen rights. Esvil's DocumentFacet (ERC-1643) and multi-jurisdictional compliance strategy directly extend this vision to a broader asset universe.
 
-Joshi and Choudhury~\cite{joshi2022} proposed a blockchain-based framework for real estate tokenization using ERC-1155 tokens and IPFS for document storage. Their work demonstrated that tokenization can lower entry barriers, fix liquidity constraints, and improve stakeholder interaction. However, their framework was limited to a single asset class (real estate) and a single token standard, lacking the multi-class partition model and compliance composability that Esvil provides through the E-RWA hybrid standard.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{figures/fig-konash-title-token.png}
+    \caption{The Title Token model showing the cryptographic linkage between on-chain ownership tokens and off-chain certification authorities. Adapted from Konashevych~\cite{konashevych2020}.}
+    \label{fig:konash-title}
+\end{figure}
 
-Juan et al.~\cite{juan2023} surveyed tokenized markets broadly, examining architectures, designs, challenges, and best practices for tokenized platforms across digital asset categories. They identified four primary steps in tokenization (asset identification, valuation, parameterization, and smart contract creation) and highlighted cybersecurity threats and regulatory absence as key challenges. Esvil addresses both: the VerifierFacet provides decentralized valuation and due diligence, while the ComplianceFacet implements composable regulatory modules.
+Joshi and Choudhury~\cite{joshi2022} proposed a blockchain-based framework for real estate tokenization using ERC-1155 tokens and IPFS for document storage. Their work identified the structural problems in traditional real estate markets (Figure~\ref{fig:joshi-problems}) and demonstrated that tokenization can lower entry barriers, fix liquidity constraints, and improve stakeholder interaction. However, their framework was limited to a single asset class (real estate) and a single token standard, lacking the multi-class partition model and compliance composability that Esvil provides through the E-RWA hybrid standard.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/fig-joshi-re-problems.png}
+    \caption{Structural problems in traditional real estate markets that tokenization aims to solve, including illiquidity, high entry barriers, and lack of transparency. Adapted from Joshi and Choudhury~\cite{joshi2022}.}
+    \label{fig:joshi-problems}
+\end{figure}
+
+Juan et al.~\cite{juan2023} surveyed tokenized markets broadly, examining architectures, designs, challenges, and best practices for tokenized platforms across digital asset categories. Their taxonomy of tokenizable assets (Figure~\ref{fig:juan-taxonomy}) distinguishes between physical and digital assets, fungible and non-fungible representations, providing the conceptual foundation for Esvil's asset-agnostic approach. They identified four primary steps in tokenization (asset identification, valuation, parameterization, and smart contract creation) and highlighted cybersecurity threats and regulatory absence as key challenges. Esvil addresses both: the VerifierFacet provides decentralized valuation and due diligence, while the ComplianceFacet implements composable regulatory modules.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/fig-juan-asset-taxonomy.png}
+    \caption{Taxonomy of tokenizable assets across physical and digital categories, illustrating the breadth of asset classes that a tokenization protocol must accommodate. Adapted from Juan et al.~\cite{juan2023}.}
+    \label{fig:juan-taxonomy}
+\end{figure}
 
 The OECD~\cite{oecd2022a} provided an institutional perspective on asset tokenization, analyzing how tokenization of financial instruments could improve market efficiency, reduce settlement times, and democratize access to investment products. Their report emphasized that regulatory clarity, investor protection, and interoperability standards are prerequisites for mainstream adoption, all of which inform Esvil's jurisdictional strategy and compliance architecture.
 
@@ -201,7 +222,14 @@ The Financial Cryptography and Data Security conference proceedings~\cite{baldim
 
 \subsection{Real-World Asset Identity and Authentication}
 
-Norta, Udokwu, and Cra{\ss}~\cite{norta2024} addressed a critical gap in RWA tokenization: the authentication of real-world asset identities in blockchain-enabled inter-organizational systems. Their work combined a logistics DApp for RWA tracking with a multi-factor challenge-set self-sovereign identity authentication system (MFSSIA), using NFT-based identity attestations to prevent counterfeit circulation. Their configurable challenge-response framework for verifying asset authenticity across organizational boundaries directly informs Esvil's VerifierFacet design, where staked verifiers submit signed attestations after multi-dimensional due diligence (legal, physical, and valuation).
+Norta, Udokwu, and Cra{\ss}~\cite{norta2024} addressed a critical gap in RWA tokenization: the authentication of real-world asset identities in blockchain-enabled inter-organizational systems. Their work combined a logistics DApp for RWA tracking with a multi-factor challenge-set self-sovereign identity authentication system (MFSSIA), using NFT-based identity attestations to prevent counterfeit circulation (Figure~\ref{fig:norta-mfssia}). Their configurable challenge-response framework for verifying asset authenticity across organizational boundaries directly informs Esvil's VerifierFacet design, where staked verifiers submit signed attestations after multi-dimensional due diligence (legal, physical, and valuation).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/fig-norta-mfssia.png}
+    \caption{The Multi-Factor Challenge-Set Self-Sovereign Identity Authentication (MFSSIA) system for real-world asset identity verification in blockchain-enabled inter-organizational systems. Adapted from Norta et al.~\cite{norta2024}.}
+    \label{fig:norta-mfssia}
+\end{figure}
 
 Karamachoski, Marina, and Taskov~\cite{karamachoski2020} demonstrated blockchain-based certification management, applying Ethereum smart contracts to university diploma verification. While their application domain differs, the core architecture of on-chain certification with cryptographic hash verification and transparent auditability is directly applicable to Esvil's DocumentFacet, which anchors legal documents (title deeds, assay certificates, audit reports) on-chain via content hashes stored on IPFS/Arweave.
 
@@ -221,7 +249,14 @@ Udokwu~\cite{udokwu2024} formalized the token economics of a blockchain-based re
 
 Sch\"ar~\cite{schar2021} provided a comprehensive taxonomy of DeFi protocols, analyzing lending, decentralized exchanges, derivatives, and asset management on blockchain-based financial markets. His framework for understanding composability, the ability of DeFi protocols to interact and build upon each other, directly informs Esvil's Diamond Pattern architecture, where facets can be composed, upgraded, and extended without disrupting existing functionality.
 
-Akbar et al.~\cite{akbar2025} designed and implemented a tokenized Decentralized Energy Management System (DEMS) for peer-to-peer energy trading, demonstrating how energy tokenization through custom tokens (ENRTokens) and smart contracts could automate trustless transactions. Their modular smart contract architecture and microservices-based design for scalability across different hardware integrations parallel Esvil's facet-based modularity, though Esvil extends this pattern to arbitrary asset classes rather than a single commodity.
+Akbar et al.~\cite{akbar2025} designed and implemented a tokenized Decentralized Energy Management System (DEMS) for peer-to-peer energy trading, demonstrating how energy tokenization through custom tokens (ENRTokens) and smart contracts could automate trustless transactions. Their modular smart contract architecture (Figure~\ref{fig:dems-arch}) and microservices-based design for scalability across different hardware integrations parallel Esvil's facet-based modularity, though Esvil extends this pattern to arbitrary asset classes rather than a single commodity.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/fig-dems-architecture.png}
+    \caption{Architecture of the tokenized Decentralized Energy Management System (DEMS), illustrating modular smart contract design for peer-to-peer energy trading. Adapted from Akbar et al.~\cite{akbar2025}.}
+    \label{fig:dems-arch}
+\end{figure}
 
 \subsection{Upgradeable Smart Contract Architecture}
 
@@ -679,12 +714,12 @@ Initial supply: 1,000,000,000 ESVL.
 \midrule
 Team \& Core & 15 & 12 mo & 48 mo & 0\% \\
 Foundation & 18 & 12 mo & 48 mo & 0\% \\
-Ecosystem \& Grants & 15 & 0 & 48 mo & --- \\
+Ecosystem \& Grants & 15 & 0 & 48 mo & -- \\
 Verifier Incentives & 12 & 12 mo & 48 mo & 0\% \\
 Private Sale & 20 & 3 mo & 24 mo & 10\% \\
 Public Sale & 8 & 0 & 6 mo & 50\% \\
 Community \& Adoption & 7 & 0 & 36 mo & 5\% \\
-Treasury Reserve & 5 & --- & Gov. & 0\% \\
+Treasury Reserve & 5 & -- & Gov. & 0\% \\
 \bottomrule
 \end{tabular}
 \end{table}
