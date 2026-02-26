@@ -161,7 +161,7 @@ This asset-agnostic approach is enabled by three architectural innovations:
 \begin{enumerate}[nosep]
     \item The \textbf{ERC-2535 Diamond Pattern}, which organizes protocol logic into modular, independently upgradeable facets behind a single proxy address.
     \item The \textbf{E-RWA hybrid token standard}, which synthesizes four ERC standards into a flexible container adaptable to any asset class.
-    \item A \textbf{pluggable compliance engine} that enforces jurisdiction-specific rules through composable compliance modules, enabling the same protocol to operate across Nigeria, Switzerland, Estonia, Singapore, and beyond.
+    \item A \textbf{pluggable compliance engine} that enforces jurisdiction-specific rules through composable compliance modules, enabling the same protocol to operate across Nigeria, Switzerland, Estonia, Singapore, Liberland, Burkina Faso, and beyond.
 \end{enumerate}
 
 \subsection{Contributions}
@@ -868,9 +868,29 @@ Switzerland & DLT Act (2021) & Tokenized securities \\
 Estonia & Virtual Asset Service Provider License & Digital asset custody \\
 Singapore & MAS Payment Services Act & Tokenized funds \\
 Dubai (DIFC) & DFSA Crypto Token Regime & Broad RWA coverage \\
+Liberland & Liberland Blockchain Laws; LLM token framework & Tokenized governance, digital assets \\
+Burkina Faso & Code Minier 2015 (revised); SONASP partnership model & Gold, mineral commodities \\
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\subsubsection{Liberland: Blockchain-Native Sovereignty}
+
+The Free Republic of Liberland presents a unique jurisdictional opportunity as a blockchain-native microstate. Liberland's governance infrastructure is built on distributed ledger technology, with its Liberland Merit (LLM) token serving as both a governance instrument and a unit of account. The state's legal framework explicitly recognizes tokenized assets and smart contract-based governance, making it one of the few jurisdictions where the Esvil Protocol's on-chain governance model (veESVL voting, Diamond upgrades, verifier elections) operates within a natively compatible legal environment. Liberland's openness to decentralized autonomous structures and its minimal regulatory overhead make it an ideal sandbox for pioneering novel RWA tokenization models before scaling to larger jurisdictions.
+
+\subsubsection{Burkina Faso: Tokenized Gold and Local Economic Empowerment}
+
+Burkina Faso is Africa's fourth-largest gold producer, with artisanal and small-scale mining (ASM) accounting for a significant share of national output. The \textit{Soci\'et\'e Nationale de Substances Pr\'ecieuses} (SONASP), the state agency responsible for purchasing, refining, and marketing artisanal gold, provides a natural institutional partner for tokenized gold provenance and trade. Under the revised \textit{Code Minier} (2015), Burkina Faso has progressively formalized its mining sector, creating regulatory pathways for technology-enabled traceability and value-chain transparency.
+
+The Esvil Protocol's integration with Burkina Faso targets three objectives:
+
+\begin{enumerate}[nosep]
+    \item \textbf{Tokenized marked gold:} Artisanally mined gold, once assayed and marked by SONASP-accredited refineries, is tokenized as E-RWA tokens. The DocumentFacet anchors assay certificates, chain-of-custody records, and SONASP purchase receipts on-chain, creating an immutable provenance trail from mine site to market.
+    \item \textbf{Local economic participation:} Gold miners and cooperatives receive Class~B E-RWA tokens representing fractional ownership in refined gold inventories, enabling them to participate in downstream value creation rather than selling raw output at discounted pit-head prices.
+    \item \textbf{Sovereign gold reserves on-chain:} In partnership with SONASP, tokenized gold reserves can serve as collateral for decentralized lending, unlocking liquidity for local infrastructure development while maintaining sovereign custody of physical assets.
+\end{enumerate}
+
+This model directly addresses the value leakage that characterizes artisanal gold supply chains in West Africa, where intermediaries capture disproportionate margins. By tokenizing marked gold at the point of SONASP certification, the protocol ensures transparent pricing, reduces counterfeiting risk, and channels value back to producing communities.
 
 % ══════════════════════════════════════════════════════
 \section{Use Cases}
@@ -895,6 +915,10 @@ A music catalog generating \$50K/month in streaming royalties is tokenized. Clas
 \subsection{Agricultural Commodities}
 
 A 500-ton cocoa harvest in bonded warehouse is tokenized against warehouse receipts. DocumentFacet stores the receipt, quality certificates, and insurance documentation. Tokens are sold via Dutch auction, with delivery settlement coordinated off-chain through an authorized custodian.
+
+\subsection{Burkina Faso: SONASP-Certified Artisanal Gold}
+
+A cooperative of 200 artisanal miners in the Sahel region produces 50kg of gold per quarter. The gold is assayed, marked, and certified by a SONASP-accredited refinery. Each kilogram is tokenized into 1,000 E-RWA tokens with full provenance documentation (mine coordinates, assay report, SONASP receipt, chain-of-custody log) anchored via the DocumentFacet. Class~A governance is held by the cooperative's elected council. Class~B tokens distribute quarterly revenue from gold sales to member miners proportionally. Class~C tokens enable international investors to gain liquid exposure to Burkinab\`e artisanal gold at transparent, oracle-verified spot pricing, bypassing opaque intermediary networks.
 
 % ══════════════════════════════════════════════════════
 \section{Security and Risk Assessment}
