@@ -1,0 +1,35 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1A1A1A', 'primaryTextColor': '#fff', 'primaryBorderColor': '#2D2D2D', 'lineColor': '#4A4A4A', 'secondaryColor': '#2D2D2D', 'tertiaryColor': '#F5F5F5', 'fontSize': '13px'}}}%%
+graph TB
+    subgraph Token Supply ["ESVL Token Economics"]
+        direction TB
+        TS[Total Supply<br/>1,000,000,000 ESVL]
+        TS --> A1["Team & Core (15%)<br/>12mo cliff, 48mo vest"]
+        TS --> A2["Foundation (18%)<br/>12mo cliff, 48mo vest"]
+        TS --> A3["Ecosystem & Grants (15%)<br/>KPI-gated release"]
+        TS --> A4["Verifier Incentives (12%)<br/>Per-verification rewards"]
+        TS --> A5["Private Sale (20%)<br/>3mo cliff, 24mo vest"]
+        TS --> A6["Public Sale (8%)<br/>50% TGE, 6mo vest"]
+        TS --> A7["Community & Adoption (7%)<br/>Airdrops, campaigns"]
+        TS --> A8["Treasury Reserve (5%)<br/>Governance-controlled"]
+    end
+
+    subgraph Utility ["Token Utility"]
+        U1[Governance<br/>veESVL voting power]
+        U2[Staking<br/>Verifier bonds + rewards]
+        U3[Fees<br/>Tokenization + trading fees]
+        U4[Access<br/>Tiered feature access]
+    end
+
+    subgraph Burns ["Deflationary Mechanics"]
+        B1[Protocol Fee Burn<br/>10-50% of fees]
+        B2[Slash Burns<br/>Malicious verifiers]
+        B3[Buyback & Burn<br/>Treasury surplus]
+    end
+
+    A3 --> U1
+    A4 --> U2
+    U3 --> B1
+    U2 --> B2
+
+    style TS fill:#1A1A1A,stroke:#fff,color:#fff
+    style B1 fill:#2D2D2D,stroke:#fff,color:#fff

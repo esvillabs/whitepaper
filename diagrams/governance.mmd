@@ -1,0 +1,32 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1A1A1A', 'primaryTextColor': '#fff', 'primaryBorderColor': '#2D2D2D', 'lineColor': '#4A4A4A', 'secondaryColor': '#2D2D2D', 'tertiaryColor': '#F5F5F5', 'fontSize': '13px'}}}%%
+flowchart TB
+    subgraph Governance ["Community Governance (veESVL)"]
+        G1[ESVL Holders] -->|Lock Tokens| G2[veESVL<br/>Vote-Escrowed]
+        G2 --> G3[Proposal Submission]
+        G3 --> G4{Voting<br/>Quorum ≥ 10%<br/>Approval ≥ 67%}
+        G4 -->|Pass| G5[Timelock<br/>48h Delay]
+        G5 --> G6[Execute via<br/>DiamondCutFacet]
+        G4 -->|Fail| G7[Archive]
+    end
+
+    subgraph Proposals ["Proposal Types"]
+        P1[Asset Approval<br/>New RWA listing]
+        P2[Protocol Upgrade<br/>Add/Replace Facets]
+        P3[Parameter Change<br/>Fees, thresholds]
+        P4[Treasury Allocation<br/>Grants, bounties]
+        P5[Verifier Election<br/>Add/Remove verifiers]
+        P6[Emergency Action<br/>Pause, forced transfer]
+    end
+
+    subgraph Verifiers ["Asset Verification Network"]
+        V1[Apply as Verifier<br/>Stake 50K ESVL] --> V2[Community Vote<br/>Approval]
+        V2 --> V3[Active Verifier<br/>Earn fees per verification]
+        V3 --> V4[Slash on<br/>Misbehavior]
+    end
+
+    P1 & P2 & P3 & P4 & P5 & P6 --> G3
+    G6 -->|Asset Approval| V3
+
+    style G4 fill:#1A1A1A,stroke:#fff,color:#fff
+    style G6 fill:#2D2D2D,stroke:#fff,color:#fff
+    style V2 fill:#4A4A4A,stroke:#fff,color:#fff

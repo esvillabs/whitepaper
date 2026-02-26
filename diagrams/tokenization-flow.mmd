@@ -1,0 +1,32 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1A1A1A', 'primaryTextColor': '#fff', 'primaryBorderColor': '#2D2D2D', 'lineColor': '#4A4A4A', 'secondaryColor': '#2D2D2D', 'tertiaryColor': '#F5F5F5', 'fontSize': '13px'}}}%%
+flowchart LR
+    subgraph Phase 1 ["Phase 1: Origination"]
+        A1[Asset Owner<br/>submits asset] --> A2[Asset Metadata<br/>+ Legal Docs]
+        A2 --> A3[Upload to IPFS<br/>Hash on-chain]
+    end
+
+    subgraph Phase 2 ["Phase 2: Verification"]
+        B1[Asset Verifiers<br/>Staked in ESVL] --> B2[Due Diligence<br/>Legal + Physical + Valuation]
+        B2 --> B3{Consensus<br/>≥ 67% Approval}
+        B3 -->|Rejected| B4[Return to Originator]
+        B3 -->|Approved| B5[Governance Council<br/>Final Sign-off]
+    end
+
+    subgraph Phase 3 ["Phase 3: Tokenization"]
+        C1[ComplianceFacet<br/>zk-KYC Check] --> C2[TokenizationFacet<br/>Mint E-RWA Tokens]
+        C2 --> C3[Partition Tokens<br/>ERC-1410 Tranches]
+        C3 --> C4[Class A: Ownership + Voting<br/>Class B: Access / Yield<br/>Class C: Tradeable]
+    end
+
+    subgraph Phase 4 ["Phase 4: Distribution"]
+        D1[Primary Offering<br/>Fixed Price / Dutch Auction] --> D2[AMM Pool Creation<br/>Secondary Market]
+        D2 --> D3[Revenue Epochs<br/>Yield to Holders]
+    end
+
+    A3 --> B1
+    B5 --> C1
+    C4 --> D1
+
+    style B3 fill:#1A1A1A,stroke:#fff,color:#fff
+    style C2 fill:#2D2D2D,stroke:#fff,color:#fff
+    style D2 fill:#4A4A4A,stroke:#fff,color:#fff

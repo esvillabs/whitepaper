@@ -1,0 +1,66 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1A1A1A', 'primaryTextColor': '#fff', 'primaryBorderColor': '#2D2D2D', 'lineColor': '#4A4A4A', 'secondaryColor': '#2D2D2D', 'tertiaryColor': '#F5F5F5', 'fontSize': '14px'}}}%%
+graph TB
+    subgraph User Layer
+        AO[Asset Originator]
+        INV[Investors / Buyers]
+        GOV[ESVL Governance]
+    end
+
+    subgraph Diamond Proxy ["ERC-2535 Diamond Proxy (Single Entry Point)"]
+        DP["DiamondProxy<br/>fallback() → route to facets"]
+        DC[DiamondCutFacet<br/>Add/Replace/Remove Facets]
+        DL[DiamondLoupeFacet<br/>Introspect Facets & Selectors]
+    end
+
+    subgraph Core Facets
+        TF[TokenizationFacet<br/>Asset onboarding, E-RWA minting]
+        CF[ComplianceFacet<br/>T-REX / ERC-3643, zk-KYC]
+        MF[MarketFacet<br/>AMM pools, order book, trading]
+        RF[RevenueFacet<br/>Yield distribution, epochs]
+        GF[GovernanceFacet<br/>Proposals, voting, veESVL]
+        DF[DocumentFacet<br/>ERC-1643, legal docs on-chain]
+        VF[VerifierFacet<br/>Asset verifier registry]
+        SF[StakingFacet<br/>ESVL staking, rewards]
+    end
+
+    subgraph Shared Storage
+        DS["DiamondStorage<br/>AppStorage struct<br/>(single shared state)"]
+    end
+
+    subgraph External
+        BNB[BNB Chain]
+        IPFS[IPFS / Arweave<br/>Document Storage]
+        OID[ONCHAINID Registry]
+    end
+
+    AO -->|Submit Asset| DP
+    INV -->|Trade / Invest| DP
+    GOV -->|Propose / Vote| DP
+
+    DP --> DC
+    DP --> DL
+    DP --> TF
+    DP --> CF
+    DP --> MF
+    DP --> RF
+    DP --> GF
+    DP --> DF
+    DP --> VF
+    DP --> SF
+
+    TF --> DS
+    CF --> DS
+    MF --> DS
+    RF --> DS
+    GF --> DS
+    DF --> DS
+    VF --> DS
+    SF --> DS
+
+    DS --> BNB
+    DF --> IPFS
+    CF --> OID
+
+    style DP fill:#1A1A1A,stroke:#fff,color:#fff
+    style DS fill:#2D2D2D,stroke:#fff,color:#fff
+    style BNB fill:#4A4A4A,stroke:#fff,color:#fff
